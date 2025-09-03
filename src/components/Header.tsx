@@ -27,11 +27,11 @@ const Header = () => {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost" className="text-foreground hover:text-primary">
-            Sign In
+          <Button variant="ghost" className="text-foreground hover:text-primary" asChild>
+            <a href="/auth">Sign In</a>
           </Button>
-          <Button className="btn-primary">
-            Get Started Free
+          <Button className="btn-primary" asChild>
+            <a href="/auth">Get Started Free</a>
           </Button>
         </div>
 
@@ -53,8 +53,12 @@ const Header = () => {
             <a href="#pricing" className="text-foreground hover:text-primary transition-colors">Pricing</a>
             <a href="#about" className="text-foreground hover:text-primary transition-colors">About</a>
             <div className="flex flex-col space-y-2 pt-4 border-t border-border">
-              <Button variant="ghost" className="justify-start">Sign In</Button>
-              <Button className="btn-primary justify-start">Get Started Free</Button>
+              <Button variant="ghost" className="justify-start" asChild>
+                <a href="/auth">Sign In</a>
+              </Button>
+              <Button className="btn-primary justify-start" asChild>
+                <a href="/auth">Get Started Free</a>
+              </Button>
             </div>
           </nav>
         </div>
