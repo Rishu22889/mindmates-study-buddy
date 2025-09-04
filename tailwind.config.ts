@@ -23,14 +23,18 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-header': 'var(--gradient-header)',
 				'gradient-subtle': 'var(--gradient-subtle)',
+				'gradient-focus': 'var(--gradient-focus)',
 			},
 			boxShadow: {
 				'elegant': 'var(--shadow-elegant)',
 				'glow': 'var(--shadow-glow)',
+				'study': 'var(--shadow-study)',
 			},
 			transitionTimingFunction: {
 				'smooth': 'var(--transition-smooth)',
+				'bounce': 'var(--transition-bounce)',
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -59,6 +63,13 @@ export default {
 				accent: {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
+				},
+				study: {
+					focus: 'hsl(var(--study-focus))',
+					calm: 'hsl(var(--study-calm))',
+					energy: 'hsl(var(--study-energy))',
+					success: 'hsl(var(--study-success))',
+					timer: 'hsl(var(--study-timer))'
 				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
@@ -100,11 +111,51 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-soft': {
+					'0%, 100%': {
+						opacity: '1',
+						transform: 'scale(1)'
+					},
+					'50%': {
+						opacity: '0.9',
+						transform: 'scale(1.02)'
+					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px)',
+					},
+					'50%': {
+						transform: 'translateY(-10px)',
+					}
+				},
+				'bounce-gentle': {
+					'0%, 100%': {
+						transform: 'translateY(0)',
+						animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)'
+					},
+					'50%': {
+						transform: 'translateY(-5px)',
+						animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)'
+					}
+				},
+				'progress-fill': {
+					'0%': {
+						width: '0%'
+					},
+					'100%': {
+						width: 'var(--progress-value, 0%)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
+				'float': 'float 3s ease-in-out infinite',
+				'bounce-gentle': 'bounce-gentle 1s infinite',
+				'progress-fill': 'progress-fill 1s ease-out forwards'
 			}
 		}
 	},

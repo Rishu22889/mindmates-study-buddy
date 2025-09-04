@@ -15,21 +15,28 @@
     --popover: 0 0% 100%;
     --popover-foreground: 210 24% 16%;
 
-    /* Brand Colors - Deep Sky Blue */
-    --primary: 207 73% 57%;
+    /* Brand Colors - Study Focus Deep Blue */
+    --primary: 210 83% 57%; /* Deep blue for focus #4A90E2 */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 207 73% 67%;
+    --primary-glow: 210 83% 67%;
 
-    /* Brand Colors - Mint Teal */
-    --secondary: 174 60% 56%;
+    /* Brand Colors - Study Calm Teal */
+    --secondary: 168 48% 61%; /* Soft teal for calm #4BD3C5 */
     --secondary-foreground: 0 0% 100%;
-    --secondary-glow: 174 60% 66%;
+    --secondary-glow: 168 48% 71%;
 
     --muted: 210 40% 98%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 174 60% 96%;
-    --accent-foreground: 174 60% 16%;
+    --accent: 28 100% 68%; /* Warm orange for energy */
+    --accent-foreground: 215 25% 12%;
+
+    /* Study-specific colors */
+    --study-success: 142 76% 36%; /* Green for achievements */
+    --study-focus: 210 83% 57%;
+    --study-calm: 168 48% 61%;
+    --study-energy: 28 100% 68%;
+    --study-timer: 262 83% 58%; /* Purple for timers */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
@@ -40,10 +47,14 @@
 
     /* Custom Design Tokens */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+    --gradient-header: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)));
     --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+    --gradient-focus: linear-gradient(135deg, hsl(var(--study-focus)), hsl(var(--study-calm)));
     --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.2);
     --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
+    --shadow-study: 0 8px 25px -8px hsl(var(--study-focus) / 0.25);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --radius: 0.5rem;
 
@@ -127,11 +138,39 @@
     @apply btn-hero bg-secondary text-secondary-foreground hover:bg-secondary/90;
   }
   
+  .btn-study-focus {
+    @apply px-12 py-6 rounded-2xl font-bold text-xl bg-gradient-to-r from-primary to-secondary text-white shadow-study hover:shadow-glow transform hover:scale-105 transition-all duration-300 animate-pulse-soft;
+  }
+  
   .feature-card {
     @apply bg-card rounded-2xl p-8 transition-all duration-300 hover:shadow-elegant hover:-translate-y-2;
   }
   
+  .study-card {
+    @apply bg-card/90 backdrop-blur-sm rounded-xl p-6 border border-border/50 transition-all duration-300 hover:shadow-study hover:-translate-y-1 hover:border-primary/30;
+  }
+  
+  .study-stat-card {
+    @apply study-card bg-gradient-to-br from-card to-muted/30;
+  }
+  
   .section-spacing {
     @apply py-16 md:py-24;
+  }
+  
+  .header-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary;
+  }
+  
+  .timer-display {
+    @apply text-6xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+  
+  .progress-ring {
+    @apply transform -rotate-90 origin-center;
+  }
+  
+  .floating-particles {
+    @apply absolute inset-0 overflow-hidden pointer-events-none;
   }
 }
