@@ -6,15 +6,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
 import { 
   Users, Clock, BookOpen, Award, Timer, Volume2, Bell, 
   Zap, Play, Coffee, Music, Headphones, Target, TrendingUp,
   Calendar, CheckCircle, Star, Flame, Brain, Trophy,
-  UserCheck, PlayCircle, Plus
+  UserCheck, PlayCircle, Plus, Video, Mic, Camera
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import UserProfile from '@/components/UserProfile';
+import AudioSystem from '@/components/AudioSystem';
+import StudyPartnerSession from '@/components/StudyPartnerSession';
+import AIAssistant from '@/components/AIAssistant';
+import VideoCallInterface from '@/components/VideoCallInterface';
+import StudyZone from '@/components/StudyZone';
 
 const Dashboard = () => {
   const [user, setUser] = useState<any>(null);
@@ -26,6 +30,10 @@ const Dashboard = () => {
   const [volume, setVolume] = useState([50]);
   const [studyStreak, setStudyStreak] = useState(7);
   const [isTimerActive, setIsTimerActive] = useState(false);
+  const [isStudyZoneActive, setIsStudyZoneActive] = useState(false);
+  const [currentPartner, setCurrentPartner] = useState<any>(null);
+  const [isInVideoCall, setIsInVideoCall] = useState(false);
+  const [aiMinimized, setAiMinimized] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,10 +80,34 @@ const Dashboard = () => {
 
   const startStudySession = () => {
     setIsTimerActive(true);
+    setIsStudyZoneActive(true);
     toast({
       title: "Study session started!",
       description: `${currentTimer} minute focus session with ${ambientSound} sounds`,
     });
+  };
+
+  const handlePartnerSession = (partnerId: string) => {
+    // Find partner and set up session
+    const partner = { name: 'Study Partner', subject: selectedSubject };
+    setCurrentPartner(partner);
+    toast({
+      title: "Partner session started!",
+      description: `Connected with study partner for ${selectedSubject}`,
+    });
+  };
+
+  const handleVideoCall = (sessionId: string) => {
+    setIsInVideoCall(true);
+    toast({
+      title: "Video call started!",
+      description: "Now in video call with your study partner",
+    });
+  };
+
+  const handleCloseStudyZone = () => {
+    setIsStudyZoneActive(false);
+    setIsTimerActive(false);
   };
 
   if (loading) {
@@ -132,33 +164,24 @@ const Dashboard = () => {
     },
   ];
 
-  const studyRooms = [
+  const activePartnerSessions = [
     {
-      name: "📚 Mathematics Focus",
-      participants: 8,
-      maxParticipants: 12,
-      timer: "23:45",
-      mood: "Intense",
-      subject: "JEE Maths",
-      avatars: ["🧑‍🎓", "👩‍🎓", "🧑‍🎓"]
+      id: '1',
+      partnerName: 'Sarah Kumar',
+      subject: 'Mathematics',
+      timer: '23:45',
+      status: 'active',
+      compatibility: 94,
+      hasVideo: false
     },
     {
-      name: "🧪 Chemistry Lab",
-      participants: 5,
-      maxParticipants: 8,
-      timer: "45:12",
-      mood: "Discussion",
-      subject: "Organic Chemistry",
-      avatars: ["👨‍🔬", "👩‍🔬"]
-    },
-    {
-      name: "⚡ Physics Power",
-      participants: 15,
-      maxParticipants: 20,
-      timer: "12:33",
-      mood: "Silent",
-      subject: "Mechanics",
-      avatars: ["🧑‍🎓", "👩‍🎓", "👨‍🎓", "👩‍🎓"]
+      id: '2', 
+      partnerName: 'Alex Chen',
+      subject: 'Physics',
+      timer: '45:12',
+      status: 'break',
+      compatibility: 89,
+      hasVideo: true
     }
   ];
 
@@ -343,31 +366,12 @@ const Dashboard = () => {
                   {isTimerActive ? "23:45" : `${currentTimer}:00`}
                 </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium">Ambient Sounds</label>
-                    <Volume2 className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                  <Select value={ambientSound} onValueChange={setAmbientSound}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="rain">🌧️ Rain</SelectItem>
-                      <SelectItem value="forest">🌲 Forest</SelectItem>
-                      <SelectItem value="cafe">☕ Café</SelectItem>
-                      <SelectItem value="white-noise">📻 White Noise</SelectItem>
-                      <SelectItem value="lofi">🎵 Lofi</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Slider
-                    value={volume}
-                    onValueChange={setVolume}
-                    max={100}
-                    step={1}
-                    className="w-full"
-                  />
-                </div>
+                <AudioSystem
+                  selectedSound={ambientSound}
+                  onSoundChange={setAmbientSound}
+                  volume={volume}
+                  onVolumeChange={setVolume}
+                />
               </div>
             </div>
           </div>
@@ -414,45 +418,41 @@ const Dashboard = () => {
             </div>
 
             <div className="space-y-4">
-              {studyRooms.map((room, index) => (
+              {activePartnerSessions.map((session, index) => (
                 <Card key={index} className="study-card hover:shadow-glow">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div>
-                        <h4 className="font-semibold text-lg">{room.name}</h4>
-                        <p className="text-sm text-muted-foreground">{room.subject}</p>
+                        <h4 className="font-semibold text-lg">Study with {session.partnerName}</h4>
+                        <p className="text-sm text-muted-foreground">{session.subject}</p>
                       </div>
                       <Badge variant="outline" className={
-                        room.mood === 'Intense' ? 'border-study-energy text-study-energy' :
-                        room.mood === 'Discussion' ? 'border-study-calm text-study-calm' :
+                        session.status === 'active' ? 'border-study-energy text-study-energy' :
+                        session.status === 'break' ? 'border-study-calm text-study-calm' :
                         'border-study-focus text-study-focus'
                       }>
-                        {room.mood}
+                        {session.status}
                       </Badge>
                     </div>
 
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-2">
-                        <div className="flex -space-x-2">
-                          {room.avatars.slice(0, 3).map((avatar, i) => (
-                            <div key={i} className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm border-2 border-background">
-                              {avatar}
-                            </div>
-                          ))}
-                        </div>
+                        <Badge variant="secondary" className="text-xs">
+                          {session.compatibility}% match
+                        </Badge>
                         <span className="text-sm text-muted-foreground">
-                          {room.participants}/{room.maxParticipants} studying
+                          1-on-1 session
                         </span>
                       </div>
                       <div className="flex items-center space-x-2 text-study-timer">
                         <Timer className="h-4 w-4" />
-                        <span className="font-mono">{room.timer}</span>
+                        <span className="font-mono">{session.timer}</span>
                       </div>
                     </div>
 
                     <Button className="w-full" variant="outline">
                       <UserCheck className="mr-2 h-4 w-4" />
-                      Join Room
+                      Join Partner Session
                     </Button>
                   </CardContent>
                 </Card>
@@ -595,6 +595,37 @@ const Dashboard = () => {
           </section>
         </div>
       </div>
+
+      {/* Study Zone - Full Screen Mode */}
+      <StudyZone
+        isActive={isStudyZoneActive}
+        onClose={handleCloseStudyZone}
+        partner={currentPartner}
+        initialSubject={selectedSubject}
+        sessionDuration={currentTimer}
+      />
+
+      {/* AI Assistant - Global */}
+      <AIAssistant
+        currentSubject={selectedSubject}
+        studyContext="Dashboard"
+        isMinimized={aiMinimized}
+        onToggleMinimize={setAiMinimized}
+      />
+
+      {/* Video Call Interface - When in call */}
+      {isInVideoCall && !isStudyZoneActive && (
+        <div className="fixed inset-0 z-40 bg-black/80 flex items-center justify-center">
+          <div className="w-full max-w-4xl">
+            <VideoCallInterface
+              partnerId={currentPartner?.id}
+              partnerName={currentPartner?.name || 'Study Partner'}
+              isInCall={isInVideoCall}
+              onEndCall={() => setIsInVideoCall(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
