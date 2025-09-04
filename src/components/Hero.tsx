@@ -30,8 +30,10 @@ const Hero = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button className="btn-primary text-xl px-10 py-6" asChild>
-              <a href="/auth">Get Started Free</a>
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <a href="/auth">
+                Get Started Free
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
             </Button>
             <Button variant="outline" className="btn-secondary text-xl px-10 py-6 bg-background/20 backdrop-blur-sm border-2 border-secondary/50 hover:bg-secondary/10">
               <Play className="mr-2 h-5 w-5" />
