@@ -1,25 +1,25 @@
-import { Linkedin, Twitter, Github } from 'lucide-react';
+import { Linkedin, Twitter, Github, Instagram } from 'lucide-react';
 
 const AboutTeam = () => {
   const founders = [
     {
       name: "Rishi Singh",
-      role: "Co-Founder & CEO",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
-      bio: "Former Product Manager at Unacademy with 5+ years in EdTech. IIT Delhi alumnus passionate about democratizing quality education through technology.",
+      role: "Co-Founder & CTO",
+      image: "/assets/rishi.png?w=300&h=300&fit=crop&crop=face",
+      bio: "Student at IIT ISM Dhanbad, actively learning AI/ML, web development, and technology product development. He leads the technical direction at MindMates, driving innovation and building the platform’s cutting-edge features with a strong focus on AI and product development.",
       socials: {
-        linkedin: "#",
-        twitter: "#",
-        github: "#"
+        linkedin: "https://www.linkedin.com/in/rishi-singh-b299131aa/",
+        instagram: "https://www.instagram.com/me_rishisingh1819/",
+        github: "https://github.com/Rishu22889"
       }
     },
     {
       name: "Sumi Debnath",
-      role: "Co-Founder & CTO",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=face",
-      bio: "Ex-PhysicsWallah Senior Engineer and AI researcher. IIIT Hyderabad graduate specializing in machine learning and collaborative learning systems.",
+      role: "Co-Founder & CEO",
+      image: "/assets/sumi.png?w=300&h=300&fit=crop&crop=face",
+      bio: "Student at Amity University Online, focusing on AI/ML and managing the business and marketing strategy for MindMates. As CEO, she spearheads growth initiatives and ensures the company’s vision aligns with market needs, fostering a thriving learning community.",
       socials: {
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/sumi-debnath-4a783533a/",
         twitter: "#",
         github: "#"
       }

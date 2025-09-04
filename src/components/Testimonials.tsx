@@ -13,7 +13,7 @@ const Testimonials = () => {
     {
       name: "Priya Patel",
       role: "NEET Aspirant",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+      image: "https://images.unsplash.com/photo-1661437502054-f43cd3a6d852?w=150&h=150&fit=crop&crop=face",
       content: "The virtual study rooms are a game-changer! Having focused Pomodoro sessions with peers kept me accountable. I went from studying 3-4 hours to 8+ hours daily effortlessly.",
       rating: 5,
       exam: "NEET"

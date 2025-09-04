@@ -2,12 +2,12 @@ const Integrations = () => {
   const integrations = [
     {
       name: "Zoom",
-      logo: "https://logos-world.net/wp-content/uploads/2020/12/Zoom-Logo.png",
+      logo: "https://cdn.worldvectorlogo.com/logos/zoom-app.svg",
       description: "Seamless video conferencing"
     },
     {
       name: "Google Calendar",
-      logo: "https://developers.google.com/calendar/images/calendar_icon.png",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg",
       description: "Smart scheduling integration"
     },
     {

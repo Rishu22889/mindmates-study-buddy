@@ -22,6 +22,7 @@ const AudioSystem: React.FC<AudioSystemProps> = ({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // 🎵 Add your own files in public/ambient/
   const ambientSounds = {
     rain: {
       name: '🌧️ Rain',
@@ -38,14 +39,14 @@ const AudioSystem: React.FC<AudioSystemProps> = ({
       file: '/ambient/cafe.mp3',
       description: 'Coffee shop ambience'
     },
-    'white-noise': {
-      name: '📻 White Noise',
-      file: '/ambient/white-noise.mp3',
-      description: 'Pure focus sound'
-    },
-    lofi: {
-      name: '🎵 Lofi',
-      file: '/ambient/lofi.mp3',
+    'white-noise': { 
+      name: '📻 White Noise', 
+      file: '/ambient/lofi2.mp3', 
+      description: 'Pure focus sound' 
+    }, 
+    lofi: { 
+      name: '🎵 Lofi', 
+      file: '/ambient/lofi1.mp3', 
       description: 'Chill beats'
     }
   };
@@ -55,27 +56,29 @@ const AudioSystem: React.FC<AudioSystemProps> = ({
     if (audioRef.current) {
       audioRef.current.pause();
     }
-    
+
     const audio = new Audio();
     audio.preload = 'auto';
-    audio.loop = true;
+    audio.loop = true; // 🔁 loop enabled
     audio.volume = volume[0] / 100;
-    
-    // Use placeholder audio for now - in production, replace with actual audio files
-    audio.src = `data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNWOcpqmsOLPrtaTt/v1rPDO7FgAAHgAQAB8AEEAfjAUiOKvnvPD/fPLxHAQAC5YBBoOJfZp8pJ6sqo4nOVGorJqqNb3ts5xkxQGVkREAAx8AXQATABkANkEKxwYf0h6t7fJ8/5/xbBcAKFcBFJSNfLhxj5m6u5kqL2Sxpquub7LdufPwQUUOhQAAAC0ADwAQAD9AHMAOCh/HdJZJPnOcv7Ogl4Y7YsepqrE4L9+7Ik/6ugIAABHBAQAAAAAA7/8BAAAAAAAsAAAAAAAAAAAA`; // Minimal WAV file
-    
+
+    // Load correct file based on selection
+    const selectedFile = ambientSounds[selectedSound as keyof typeof ambientSounds]?.file;
+    audio.src = selectedFile || "";
+
     audioRef.current = audio;
 
-    const handleCanPlayThrough = () => {
-      setIsLoading(false);
-    };
-
-    const handleLoadStart = () => {
-      setIsLoading(true);
-    };
+    const handleCanPlayThrough = () => setIsLoading(false);
+    const handleLoadStart = () => setIsLoading(true);
 
     audio.addEventListener('canplaythrough', handleCanPlayThrough);
     audio.addEventListener('loadstart', handleLoadStart);
+
+    if (isPlaying) {
+      audio.play().catch(err => {
+        setIsPlaying(false);
+      });
+    }
 
     return () => {
       audio.removeEventListener('canplaythrough', handleCanPlayThrough);
