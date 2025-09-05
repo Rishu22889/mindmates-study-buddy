@@ -100,23 +100,29 @@ const Auth = () => {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`
+          redirectTo: `${window.location.origin}/dashboard`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
         }
       });
 
       if (error) throw error;
+
+      // Don't show success message here as redirect will happen
     } catch (error: any) {
       toast({
         title: "Google sign in failed",
         description: error.message,
         variant: "destructive",
       });
-    } finally {
       setLoading(false);
     }
+    // Don't set loading to false here as redirect will happen
   };
 
   return (
